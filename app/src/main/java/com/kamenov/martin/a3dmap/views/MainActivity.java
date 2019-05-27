@@ -2,6 +2,7 @@ package com.kamenov.martin.a3dmap.views;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
@@ -50,6 +51,7 @@ public class MainActivity extends Activity {
     private void createMapObject() {
         float centerX = 25.151561f;
         float centerY = 42.624143f;
+        float sizeCoef = EngineConstants.SCREEN_WIDTH / 10;
         double[][] pointsReversed = new double[][] {
                 new double[] {44.215051, 22.675117},
                 new double[] {44.067670, 23.042662},
@@ -118,8 +120,9 @@ public class MainActivity extends Activity {
 
         DeepPoint[] points = new DeepPoint[pointsReversed.length];
         for(int i = 0; i < pointsReversed.length; i++) {
-            points[i] = new DeepPoint((float)pointsReversed[i][1] - centerX,
-                    (float)pointsReversed[i][0] - centerY, 0);
+            float x = ((float)pointsReversed[i][1] - centerX) * sizeCoef;
+            float y = ((float)pointsReversed[i][0] - centerY) * sizeCoef;
+            points[i] = new DeepPoint(x, y, 0);
         }
 
         ArrayList<DeepPoint[]> parts = new ArrayList<>();
