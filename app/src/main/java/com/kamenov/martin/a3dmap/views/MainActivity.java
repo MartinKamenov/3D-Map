@@ -42,39 +42,20 @@ public class MainActivity extends Activity {
         RelativeLayout relativeLayout = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
         createMapObject();
-        //createCubeObject();
         gamePanel = new GamePanel(this, drawingService, FigureFactory.getInstance());
 
         relativeLayout.addView(gamePanel);
     }
 
-    private void createCubeObject() {
-        FigureFactory.getInstance().createCube(0, 0, 0, 100, PaintService.createEdgePaint("red"),
-                PaintService.createWallPaint("blue"), 1);
-    }
-
     private void createMapObject() {
-        Float[][] mapPoints = new Float[][] {
-                new Float[] {EngineConstants.SCREEN_WIDTH / 2 + 0f, EngineConstants.SCREEN_HEIGHT / 2 + 0f},
-                new Float[] {EngineConstants.SCREEN_WIDTH / 2 + 5f, EngineConstants.SCREEN_HEIGHT / 2 + 5f},
-                new Float[] {EngineConstants.SCREEN_WIDTH / 2 + 0f, EngineConstants.SCREEN_HEIGHT / 2 + 5f}
+        DeepPoint[] points = new DeepPoint[] {
+                new DeepPoint(100, 100, 0),
+                new DeepPoint(100, -100, 0),
+                new DeepPoint(-100, 0, 0)
         };
 
-        DeepPoint[] mapDeepPoints = new DeepPoint[mapPoints.length];
         ArrayList<DeepPoint[]> parts = new ArrayList<>();
-        for(int i = 0; i < mapPoints.length; i++) {
-            DeepPoint point = new DeepPoint(mapPoints[i][0], mapPoints[i][1], 0);
-            mapDeepPoints[i] = point;
-            if(i > 0) {
-                DeepPoint[] drawingPartPoints = new DeepPoint[] {mapDeepPoints[i - 1], mapDeepPoints[i]};
-                parts.add(drawingPartPoints);
-            }
-
-            if(i == mapPoints.length - 1) {
-                DeepPoint[] drawingPartPoints = new DeepPoint[] {mapDeepPoints[0], mapDeepPoints[i]};
-                parts.add(drawingPartPoints);
-            }
-        }
+        parts.add(points);
 
         PartsObject mapObject = new PartsObject(
                 EngineConstants.SCREEN_WIDTH / 2,
@@ -83,7 +64,7 @@ public class MainActivity extends Activity {
                 PaintService.createEdgePaint("red"),
                 PaintService.createWallPaint("blue"),
                 1,
-                mapDeepPoints,
+                points,
                 parts
         );
 
