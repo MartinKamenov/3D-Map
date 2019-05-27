@@ -1,6 +1,7 @@
 package com.kamenov.martin.a3dmap.engine.services;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Path;
 
 import com.kamenov.martin.a3dmap.engine.constants.EngineConstants;
@@ -21,6 +22,7 @@ public class DrawingService {
     public boolean shouldUpdate;
     private static DrawingService instance;
     private SortingService sortingService;
+    private Paint edgePaint;
 
     // Dependencies: SortingService
     private DrawingService(SortingService sortingService) {
@@ -39,6 +41,10 @@ public class DrawingService {
     public void drawFigures(Canvas canvas, ArrayList<Object3D> figures) {
         List<DrawingPart> drawingParts = arrangeDrawingParts(figures);
         drawParts(canvas, drawingParts);
+    }
+
+    public void setEdgePaint(Paint edgePaint) {
+        this.edgePaint = edgePaint;
     }
 
     private List<DrawingPart> arrangeDrawingParts(List<Object3D> figures) {
@@ -134,5 +140,8 @@ public class DrawingService {
             wallPath.lineTo(part[j].getX() + drawingPart.x, part[j].getY() + drawingPart.y);
         }
         canvas.drawPath(wallPath, drawingPart.paint);
+        if(edgePaint != null) {
+            canvas.drawPath(wallPath, edgePaint);
+        }
     }
 }

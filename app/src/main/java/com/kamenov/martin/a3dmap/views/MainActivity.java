@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         RelativeLayout relativeLayout = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
+        drawingService.setEdgePaint(PaintService.createEdgePaint("white"));
         createMapObject();
         gamePanel = new GamePanel(this, drawingService, FigureFactory.getInstance());
 
@@ -51,7 +52,7 @@ public class MainActivity extends Activity {
     private void createMapObject() {
         float centerX = 25.151561f;
         float centerY = 42.624143f;
-        float sizeCoef = EngineConstants.SCREEN_WIDTH / 10;
+        float sizeCoef = EngineConstants.SCREEN_WIDTH / 8;
         double[][] pointsReversed = new double[][] {
                 new double[] {44.215051, 22.675117},
                 new double[] {44.067670, 23.042662},
@@ -118,7 +119,7 @@ public class MainActivity extends Activity {
         DeepPoint[] points = new DeepPoint[pointsReversed.length];
         for(int i = 0; i < pointsReversed.length; i++) {
             float x = ((float)pointsReversed[i][1] - centerX) * sizeCoef;
-            float y = ((float)pointsReversed[i][0] - centerY) * sizeCoef;
+            float y = ((float)pointsReversed[i][0] - centerY) * -sizeCoef;
             points[i] = new DeepPoint(x, y, 0);
         }
 
@@ -129,7 +130,7 @@ public class MainActivity extends Activity {
                 EngineConstants.SCREEN_WIDTH / 2,
                 EngineConstants.SCREEN_HEIGHT / 2,
                 0,
-                PaintService.createEdgePaint("red"),
+                PaintService.createEdgePaint("white"),
                 PaintService.createWallPaint("blue"),
                 1,
                 points,
