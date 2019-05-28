@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,7 +21,14 @@ import com.kamenov.martin.a3dmap.engine.services.DrawingService;
 import com.kamenov.martin.a3dmap.engine.services.PaintService;
 import com.kamenov.martin.a3dmap.engine.services.SortingService;
 import com.kamenov.martin.a3dmap.engine.services.factories.FigureFactory;
+import com.kamenov.martin.a3dmap.models.Town;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -113,7 +121,8 @@ public class MainActivity extends Activity {
                 new double[] {43.922791, 22.393988},
                 new double[] {44.004352, 22.418618},
                 new double[] {44.048154, 22.542222},
-                new double[] {44.093995, 22.618968}
+                new double[] {44.093995, 22.618968},
+                new double[] {44.215051, 22.675117}
         };
 
         DeepPoint[] points = new DeepPoint[pointsReversed.length];
@@ -131,14 +140,70 @@ public class MainActivity extends Activity {
                 EngineConstants.SCREEN_HEIGHT / 2,
                 0,
                 PaintService.createEdgePaint("white"),
-                PaintService.createWallPaint("blue"),
+                PaintService.createWallPaint("#a51234"),
                 1,
                 points,
                 parts
         );
 
+        InputStream inputStream = getResources().openRawResource(
+                getResources().getIdentifier("bg",
+                        "raw", getPackageName()));
+        String townsString = getStringFromInputStream(inputStream);
+
+        Town[] towns = new Town[] {
+                new Town ("Sofia", 42.691522, 23.320794),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+//                new Town ("", ),
+
+        };
+
         ArrayList<Object3D> objects = new ArrayList<>();
         objects.add(mapObject);
         FigureFactory.getInstance().setFigures(objects);
+    }
+
+    private static String getStringFromInputStream(InputStream stream) {
+        try {
+            int n = 0;
+            char[] buffer = new char[1024 * 4];
+            InputStreamReader reader = new InputStreamReader(stream, "UTF8");
+            StringWriter writer = new StringWriter();
+            while (-1 != (n = reader.read(buffer))) writer.write(buffer, 0, n);
+            return writer.toString();
+        } catch (UnsupportedEncodingException ex) {
+            Log.d(ex.getMessage(), ex.getMessage());
+        } catch (IOException ex) {
+            Log.d(ex.getMessage(), ex.getMessage());
+        }
+
+        return "";
     }
 }
