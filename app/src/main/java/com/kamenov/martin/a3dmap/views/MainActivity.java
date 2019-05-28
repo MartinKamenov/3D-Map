@@ -164,7 +164,14 @@ public class MainActivity extends Activity {
         for(int i = 0; i < towns.length; i++) {
             float x = ((float)towns[i].lng - centerX) * sizeCoef;
             float y = ((float)towns[i].lat - centerY) * -sizeCoef;
-            float radius = towns[i].population / 16928;
+            float radius = towns[i].population;
+            if(radius > 1000000) {
+                radius = radius / 118500;
+            } else if(radius > 150000) {
+                radius = radius / 40000;
+            } else {
+                radius = radius / 15000;
+            }
             Sphere town = new Sphere(
                     EngineConstants.SCREEN_WIDTH / 2 + x,
                     EngineConstants.SCREEN_HEIGHT / 2 + y,
