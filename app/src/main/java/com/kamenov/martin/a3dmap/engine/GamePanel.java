@@ -14,6 +14,7 @@ import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.Rotatable;
 import com.kamenov.martin.a3dmap.engine.services.DrawingService;
 import com.kamenov.martin.a3dmap.engine.services.factories.IFigureFactory;
 import com.kamenov.martin.a3dmap.engine.thread.GameThread;
+import com.kamenov.martin.a3dmap.models.Background;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
     private ArrayList<Object3D> figures;
     private DrawingService drawingService;
     private GameThread thread;
-    private GameObject background;
+    private Background background;
     private float x1;
     private float y1;
     private float x2;
@@ -37,6 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
         x2 = -1;
         this.drawingService = drawingService;
         figures = figureFactory.getFigures();
+        background = new Background(Color.parseColor("#ccfffa"));
 
         getHolder().addCallback(this);
 
@@ -116,7 +118,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        //background.draw(canvas);
+        background.draw(canvas);
         drawingService.drawFigures(canvas, figures);
     }
 

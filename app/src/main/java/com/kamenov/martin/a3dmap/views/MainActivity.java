@@ -1,6 +1,7 @@
 package com.kamenov.martin.a3dmap.views;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.util.DisplayMetrics;
@@ -24,6 +25,7 @@ import com.kamenov.martin.a3dmap.engine.services.DrawingService;
 import com.kamenov.martin.a3dmap.engine.services.PaintService;
 import com.kamenov.martin.a3dmap.engine.services.SortingService;
 import com.kamenov.martin.a3dmap.engine.services.factories.FigureFactory;
+import com.kamenov.martin.a3dmap.models.Background;
 import com.kamenov.martin.a3dmap.models.Town;
 
 import java.io.BufferedReader;
@@ -53,7 +55,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         RelativeLayout relativeLayout = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
-        drawingService.setEdgePaint(PaintService.createEdgePaint("white"));
+        drawingService.setEdgePaint(PaintService.createEdgePaint("#00966E"));
         createMapObject();
         gamePanel = new GamePanel(this, drawingService, FigureFactory.getInstance());
 
@@ -143,7 +145,7 @@ public class MainActivity extends Activity {
                 EngineConstants.SCREEN_HEIGHT / 2,
                 0,
                 PaintService.createEdgePaint("white"),
-                PaintService.createWallPaint("#a51234"),
+                PaintService.createWallPaint("black"),
                 1,
                 points,
                 parts
@@ -169,7 +171,7 @@ public class MainActivity extends Activity {
                     PaintService.createWallPaint("aa"),
                     PaintService.createWallPaint("white"),
                     1,
-                    5
+                    7
             );
 
             objects.add(town);
