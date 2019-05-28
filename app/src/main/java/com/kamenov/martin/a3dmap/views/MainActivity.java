@@ -10,10 +10,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.kamenov.martin.a3dmap.R;
 import com.kamenov.martin.a3dmap.engine.GamePanel;
 import com.kamenov.martin.a3dmap.engine.constants.EngineConstants;
+import com.kamenov.martin.a3dmap.engine.models.game_objects.ComplexObject;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.PartsObject;
+import com.kamenov.martin.a3dmap.engine.models.game_objects.Sphere;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.DeepPoint;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.DrawingPart;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.Object3D;
@@ -151,43 +154,43 @@ public class MainActivity extends Activity {
                         "raw", getPackageName()));
         String townsString = getStringFromInputStream(inputStream);
 
-        Town[] towns = new Town[] {
-                new Town ("Sofia", 42.691522, 23.320794),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-//                new Town ("", ),
-
-        };
+        Gson gson = new Gson();
+        Town[] towns = gson.fromJson(townsString, Town[].class);
 
         ArrayList<Object3D> objects = new ArrayList<>();
+
+        for(int i = 0; i < towns.length; i++) {
+            float x = ((float)towns[i].lng - centerX) * sizeCoef;
+            float y = ((float)towns[i].lat - centerY) * -sizeCoef;
+            Sphere town = new Sphere(
+                    EngineConstants.SCREEN_WIDTH / 2 + x,
+                    EngineConstants.SCREEN_HEIGHT / 2 + y,
+                    -100,
+                    PaintService.createWallPaint("aa"),
+                    PaintService.createWallPaint("white"),
+                    1,
+                    5
+            );
+
+            objects.add(town);
+        }
+
+
         objects.add(mapObject);
-        FigureFactory.getInstance().setFigures(objects);
+
+        ComplexObject mapWithTownsObject = new ComplexObject(
+                EngineConstants.SCREEN_WIDTH / 2 + centerX,
+                EngineConstants.SCREEN_HEIGHT/2 + centerY,
+                0,
+                PaintService.createEdgePaint("red"),
+                PaintService.createWallPaint("white"),
+                1,
+                objects
+        );
+
+        ArrayList<Object3D> allFigures = new ArrayList();
+        allFigures.add(mapWithTownsObject);
+        FigureFactory.getInstance().setFigures(allFigures);
     }
 
     private static String getStringFromInputStream(InputStream stream) {
