@@ -164,6 +164,7 @@ public class MainActivity extends Activity {
         for(int i = 0; i < towns.length; i++) {
             float x = ((float)towns[i].lng - centerX) * sizeCoef;
             float y = ((float)towns[i].lat - centerY) * -sizeCoef;
+            float radius = towns[i].population / 16928;
             Sphere town = new Sphere(
                     EngineConstants.SCREEN_WIDTH / 2 + x,
                     EngineConstants.SCREEN_HEIGHT / 2 + y,
@@ -171,7 +172,7 @@ public class MainActivity extends Activity {
                     PaintService.createWallPaint("aa"),
                     PaintService.createWallPaint("white"),
                     1,
-                    7
+                    radius
             );
 
             objects.add(town);

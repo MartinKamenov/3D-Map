@@ -195,7 +195,7 @@
         "capital": "minor", 
         "lat": "41.684083", 
         "lng": "24.293", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Madan", 
@@ -206,7 +206,7 @@
         "capital": "minor", 
         "lat": "41.498686", 
         "lng": "24.939727", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Zlatograd", 
@@ -217,7 +217,7 @@
         "capital": "minor", 
         "lat": "41.379498", 
         "lng": "25.096052", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Pazardzhik", 
@@ -228,7 +228,7 @@
         "capital": "admin", 
         "lat": "42.2", 
         "lng": "24.333333", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Smolyan", 
@@ -239,7 +239,7 @@
         "capital": "admin", 
         "lat": "41.585278", 
         "lng": "24.691944", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Blagoevgrad", 
@@ -250,7 +250,7 @@
         "capital": "admin", 
         "lat": "42.016667", 
         "lng": "23.1", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Nedelino", 
@@ -261,7 +261,7 @@
         "capital": "minor", 
         "lat": "41.456019", 
         "lng": "25.080081", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Rudozem", 
@@ -272,7 +272,7 @@
         "capital": "minor", 
         "lat": "41.487514", 
         "lng": "24.849452", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Devin", 
@@ -283,7 +283,7 @@
         "capital": "minor", 
         "lat": "41.742048", 
         "lng": "24.397208", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Veliko Tarnovo", 
@@ -294,7 +294,7 @@
         "capital": "admin", 
         "lat": "43.085833", 
         "lng": "25.655556", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Vidin", 
@@ -305,7 +305,7 @@
         "capital": "admin", 
         "lat": "43.99", 
         "lng": "22.8725", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Kirkovo", 
@@ -316,7 +316,7 @@
         "capital": "minor", 
         "lat": "41.327153", 
         "lng": "25.36379", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Krumovgrad", 
@@ -327,7 +327,7 @@
         "capital": "minor", 
         "lat": "41.47127", 
         "lng": "25.654847", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Dzhebel", 
@@ -338,7 +338,7 @@
         "capital": "minor", 
         "lat": "41.495662", 
         "lng": "25.303625", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Silistra", 
@@ -349,7 +349,7 @@
         "capital": "admin", 
         "lat": "43.916667",
         "lng": "27.266667",
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Sarnitsa", 
@@ -360,7 +360,7 @@
         "capital": "minor", 
         "lat": "41.738347", 
         "lng": "24.024355", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Shiroka Laka", 
@@ -371,7 +371,7 @@
         "capital": "minor", 
         "lat": "41.679252", 
         "lng": "24.581351", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Yambol", 
@@ -382,7 +382,7 @@
         "capital": "admin", 
         "lat": "42.483333", 
         "lng": "26.5", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Dospat", 
@@ -393,7 +393,7 @@
         "capital": "minor", 
         "lat": "41.644623", 
         "lng": "24.158566", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Kardzhali", 
@@ -404,7 +404,7 @@
         "capital": "admin", 
         "lat": "41.65", 
         "lng": "25.366667", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Gabrovo", 
@@ -415,7 +415,7 @@
         "capital": "admin", 
         "lat": "42.874722", 
         "lng": "25.334167", 
-        "population": ""
+        "population": "30000"
     }, 
     {
         "city": "Targovishte", 
@@ -426,6 +426,6 @@
         "capital": "admin", 
         "lat": "43.259167", 
         "lng": "26.589167", 
-        "population": ""
+        "population": "30000"
     }
 ]
