@@ -160,18 +160,15 @@ public class MainActivity extends Activity {
         Town[] towns = gson.fromJson(townsString, Town[].class);
 
         ArrayList<Object3D> objects = new ArrayList<>();
+        int townsSizeCoef = 118500;
 
         for(int i = 0; i < towns.length; i++) {
             float x = ((float)towns[i].lng - centerX) * sizeCoef;
             float y = ((float)towns[i].lat - centerY) * -sizeCoef;
-            float radius = towns[i].population;
-            if(radius > 1000000) {
-                radius = radius / 118500;
-            } else if(radius > 150000) {
-                radius = radius / 40000;
-            } else {
-                radius = radius / 15000;
-            }
+            
+            // Radius is calculated adding town's size proportion to two
+            float radius = 2 + (towns[i].population / townsSizeCoef);
+
             Sphere town = new Sphere(
                     EngineConstants.SCREEN_WIDTH / 2 + x,
                     EngineConstants.SCREEN_HEIGHT / 2 + y,
