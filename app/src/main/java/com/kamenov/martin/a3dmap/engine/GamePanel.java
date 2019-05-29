@@ -8,10 +8,13 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.kamenov.martin.a3dmap.engine.constants.EngineConstants;
+import com.kamenov.martin.a3dmap.engine.models.game_objects.ComplexObject;
+import com.kamenov.martin.a3dmap.engine.models.game_objects.Cube;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.GameObject;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.Object3D;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.Rotatable;
 import com.kamenov.martin.a3dmap.engine.services.DrawingService;
+import com.kamenov.martin.a3dmap.engine.services.PaintService;
 import com.kamenov.martin.a3dmap.engine.services.factories.IFigureFactory;
 import com.kamenov.martin.a3dmap.engine.thread.GameThread;
 import com.kamenov.martin.a3dmap.models.Background;
@@ -31,6 +34,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
     private float y1;
     private float x2;
     private float y2;
+    private float initialX;
+    private float initialY;
+    private float smallestDifference = 10;
 
     public GamePanel(Context context, DrawingService drawingService, IFigureFactory figureFactory) {
         super(context);
@@ -51,6 +57,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
                 y1 = event.getY();
+                initialX = event.getX();
+                initialY = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 x2 = event.getX();
@@ -72,15 +80,53 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
                 y2 = event.getY();
                 deltaX = x2 - x1;
                 deltaY = y2 - y1;
-                for(int i = 0; i < figures.size(); i++)
-                {
-                    Object3D figure = figures.get(i);
-                    moveObject(deltaX, deltaY, figure);
+                float deltaXInitial = Math.abs(x2 - initialX);
+                float deltaYInitial = Math.abs(y2 - initialY);
+                if(deltaXInitial < smallestDifference && deltaYInitial < smallestDifference) {
+                    addCube(x2, y2, (ComplexObject) figures.get(1));
+                }
+                else {
+                    for (int i = 0; i < figures.size(); i++) {
+                        Object3D figure = figures.get(i);
+                        moveObject(deltaX, deltaY, figure);
+                    }
                 }
                 draw();
                 break;
         }
         return true;
+    }
+
+    private void addCube(float eventX, float eventY, ComplexObject figure) {
+        ArrayList<Object3D> objects = figure.getObjects();
+        if(objects.size() == 0) {
+            return;
+        }
+        Object3D closestObject = objects.get(0);
+        int index = 0;
+        double closestDifference = getDifferenceUsingPythagoras(eventX, closestObject.x, eventY, closestObject.y);
+
+        for(int i = 1; i < objects.size(); i++) {
+            double currentDifference = getDifferenceUsingPythagoras(
+                    eventX, objects.get(i).x,
+                    eventY, objects.get(i).y);
+            if(currentDifference < closestDifference) {
+                closestDifference = currentDifference;
+                index = i;
+                closestObject = objects.get(i);
+            }
+        }
+
+        objects.set(index, new Cube(closestObject.x, closestObject.y, closestObject.z, 10,
+                PaintService.createEdgePaint("red"),
+                PaintService.createWallPaint("white"),1));
+    }
+
+    private double getDifferenceUsingPythagoras(float x1, float x2, float y1, float y2) {
+        return Math.sqrt(
+                (x1 - x2)*(x1 - x2) +
+                        (y1 - y2) * (y1 - y2)
+        );
     }
 
     private void moveObject(float deltaX, float deltaY, Object3D figure) {

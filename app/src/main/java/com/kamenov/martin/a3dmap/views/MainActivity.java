@@ -89,7 +89,6 @@ public class MainActivity extends Activity {
                 new double[] {43.184404, 27.901145},
                 new double[] {43.049496, 27.906485},
                 new double[] {42.921384, 27.897696},
-                new double[] {43.184404, 27.901145},
                 new double[] {42.712788, 27.745465},
                 new double[] {42.670692, 27.710957},
                 new double[] {42.595708, 27.628591},

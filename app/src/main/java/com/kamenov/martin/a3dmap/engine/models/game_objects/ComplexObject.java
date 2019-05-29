@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 
 public class ComplexObject extends Object3D {
-    private final ArrayList<Object3D> objects;
+    private ArrayList<Object3D> objects;
 
     public ComplexObject(float x, float y, float z, Paint edgePaint, Paint wallPaint, float rotation, ArrayList<Object3D> objects) {
         super(x, y, z, edgePaint, wallPaint, rotation);
@@ -50,6 +50,18 @@ public class ComplexObject extends Object3D {
             }
         }
 
+        setDrawingParts();
+    }
+
+
+    public ArrayList<Object3D> getObjects() {
+        return objects;
+    }
+
+    // Changing objects in complex object may not change the complex object
+    // except if setDrawingParts method is called
+    public void setObjects(ArrayList<Object3D> newObjects) {
+        objects = newObjects;
         setDrawingParts();
     }
 
