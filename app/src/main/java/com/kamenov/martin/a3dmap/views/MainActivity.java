@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
     private void createMapObject() {
         float centerX = 25.151561f;
         float centerY = 42.624143f;
-        float sizeCoef = EngineConstants.SCREEN_WIDTH / 8;
+        float sizeCoef = EngineConstants.SCREEN_WIDTH / 4;
         double[][] pointsReversed = new double[][] {
                 new double[] {44.215051, 22.675117},
                 new double[] {44.067670, 23.042662},
@@ -187,8 +187,8 @@ public class MainActivity extends Activity {
         //objects.add(mapObject);
 
         ComplexObject townsObject = new ComplexObject(
-                EngineConstants.SCREEN_WIDTH / 2 + centerX,
-                EngineConstants.SCREEN_HEIGHT/2 + centerY,
+                EngineConstants.SCREEN_WIDTH / 2,
+                EngineConstants.SCREEN_HEIGHT / 2,
                 0,
                 PaintService.createEdgePaint("red"),
                 PaintService.createWallPaint("white"),
@@ -197,6 +197,8 @@ public class MainActivity extends Activity {
         );
 
         ArrayList<Object3D> allFigures = new ArrayList();
+        mapObject.rotateZ3D(90);
+        townsObject.rotateZ3D(90);
         allFigures.add(mapObject);
         allFigures.add(townsObject);
         FigureFactory.getInstance().setFigures(allFigures);
