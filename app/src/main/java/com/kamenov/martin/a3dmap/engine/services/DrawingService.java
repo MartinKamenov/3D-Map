@@ -43,6 +43,13 @@ public class DrawingService {
         drawParts(canvas, drawingParts);
     }
 
+    public void drawFiguresInAdditionOrder(Canvas canvas, ArrayList<Object3D> figures) {
+        for(int i = 0 ; i < figures.size(); i++) {
+            List<DrawingPart> drawingParts = figures.get(i).drawingParts;
+            drawParts(canvas, drawingParts);
+        }
+    }
+
     public void setEdgePaint(Paint edgePaint) {
         this.edgePaint = edgePaint;
     }

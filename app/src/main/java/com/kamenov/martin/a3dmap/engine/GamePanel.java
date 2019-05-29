@@ -119,7 +119,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
     public void draw(Canvas canvas) {
         super.draw(canvas);
         background.draw(canvas);
-        drawingService.drawFigures(canvas, figures);
+        drawingService.drawFiguresInAdditionOrder(canvas, figures);
     }
 
     private void draw() {

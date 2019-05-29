@@ -165,14 +165,14 @@ public class MainActivity extends Activity {
         for(int i = 0; i < towns.length; i++) {
             float x = ((float)towns[i].lng - centerX) * sizeCoef;
             float y = ((float)towns[i].lat - centerY) * -sizeCoef;
-            
+
             // Radius is calculated adding town's size proportion to two
             float radius = 2 + (towns[i].population / townsSizeCoef);
 
             Sphere town = new Sphere(
                     EngineConstants.SCREEN_WIDTH / 2 + x,
                     EngineConstants.SCREEN_HEIGHT / 2 + y,
-                    -100,
+                    0,
                     PaintService.createWallPaint("aa"),
                     PaintService.createWallPaint("white"),
                     1,
@@ -183,9 +183,10 @@ public class MainActivity extends Activity {
         }
 
 
-        objects.add(mapObject);
 
-        ComplexObject mapWithTownsObject = new ComplexObject(
+        //objects.add(mapObject);
+
+        ComplexObject townsObject = new ComplexObject(
                 EngineConstants.SCREEN_WIDTH / 2 + centerX,
                 EngineConstants.SCREEN_HEIGHT/2 + centerY,
                 0,
@@ -196,7 +197,8 @@ public class MainActivity extends Activity {
         );
 
         ArrayList<Object3D> allFigures = new ArrayList();
-        allFigures.add(mapWithTownsObject);
+        allFigures.add(mapObject);
+        allFigures.add(townsObject);
         FigureFactory.getInstance().setFigures(allFigures);
     }
 
