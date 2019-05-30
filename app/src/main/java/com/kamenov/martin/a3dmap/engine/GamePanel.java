@@ -104,7 +104,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
         }
         Object3D closestObject = objects.get(0);
         int index = 0;
-        double closestDifference = getDifferenceUsingPythagoras(eventX, closestObject.x, eventY, closestObject.y);
+        double closestDifference = getDifferenceUsingPythagoras(
+                eventX,
+                closestObject.x,
+                eventY,
+                closestObject.y);
 
         for(int i = 1; i < objects.size(); i++) {
             double currentDifference = getDifferenceUsingPythagoras(
@@ -117,9 +121,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
             }
         }
 
-        objects.set(index, new Cube(closestObject.x, closestObject.y, closestObject.z, 10,
+        Cube townCube = new Cube(closestObject.x, closestObject.y, closestObject.z, 10,
                 PaintService.createEdgePaint("red"),
-                PaintService.createWallPaint("white"),1));
+                PaintService.createWallPaint("white"),1);
+        objects.set(index, townCube);
+        figure.setObjects(objects);
     }
 
     private double getDifferenceUsingPythagoras(float x1, float x2, float y1, float y2) {

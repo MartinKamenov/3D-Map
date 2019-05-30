@@ -62,6 +62,38 @@ public class ComplexObject extends Object3D {
     // except if setDrawingParts method is called
     public void setObjects(ArrayList<Object3D> newObjects) {
         objects = newObjects;
+        int pointsLength = 0;
+        for(int i = 0; i < objects.size(); i++)
+        {
+            pointsLength += objects.get(i).points.length;
+            objects.get(i).setRotateX(false);
+            objects.get(i).setRotateY(false);
+            objects.get(i).setRotateZ(false);
+        }
+        points = new DeepPoint[pointsLength];
+        parts = new ArrayList<>();
+        int index = 0;
+        for(int i = 0; i < objects.size(); i++)
+        {
+            Object3D object = objects.get(i);
+            float differenceX = object.x - x;
+            float differenceY = object.y - y;
+            float differenceZ = object.z - z;
+            for(int j = 0; j < objects.get(i).points.length; j++)
+            {
+                DeepPoint point = object.points[j];
+                point.setX(point.getX() + differenceX);
+                point.setY(point.getY() + differenceY);
+                point.setZ(point.getZ() + differenceZ);
+                points[index++] = point;
+            }
+            for(int j = 0; j < object.parts.size(); j++)
+            {
+                DeepPoint[] part = object.parts.get(j);
+                parts.add(part);
+            }
+        }
+
         setDrawingParts();
     }
 
