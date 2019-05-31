@@ -15,9 +15,11 @@ import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.Object3D;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.Rotatable;
 import com.kamenov.martin.a3dmap.engine.services.DrawingService;
 import com.kamenov.martin.a3dmap.engine.services.PaintService;
+import com.kamenov.martin.a3dmap.engine.services.factories.FigureFactory;
 import com.kamenov.martin.a3dmap.engine.services.factories.IFigureFactory;
 import com.kamenov.martin.a3dmap.engine.thread.GameThread;
 import com.kamenov.martin.a3dmap.models.Background;
+import com.kamenov.martin.a3dmap.views.MainActivity;
 
 import java.util.ArrayList;
 
@@ -37,9 +39,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
     private float initialX;
     private float initialY;
     private float smallestDifference = 10;
+    private MainActivity mainActivity;
 
-    public GamePanel(Context context, DrawingService drawingService, IFigureFactory figureFactory) {
-        super(context);
+    public GamePanel(MainActivity mainActivity, DrawingService drawingService, IFigureFactory figureFactory) {
+        super(mainActivity.getApplicationContext());
+        this.mainActivity = mainActivity;
         x1 = -1;
         x2 = -1;
         this.drawingService = drawingService;
@@ -121,11 +125,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
             }
         }
 
-        Cube townCube = new Cube(closestObject.x, closestObject.y, closestObject.z, 10,
-                PaintService.createEdgePaint("red"),
-                PaintService.createWallPaint("white"),1);
-        objects.set(index, townCube);
-        figure.setObjects(objects);
+        //mainActivity.createMapObject();
+        ArrayList<Object3D> aa = new ArrayList<>();
+        Cube cube = new Cube(0, 0,0, 50, PaintService.createEdgePaint("green"),
+                PaintService.createWallPaint("blue"), 1);
+        aa.add(cube);
+        FigureFactory.getInstance().setFigures(aa);
+        this.updateFigures();
+    }
+
+    private void updateFigures() {
+        this.figures = FigureFactory.getInstance().getFigures();
     }
 
     private double getDifferenceUsingPythagoras(float x1, float x2, float y1, float y2) {

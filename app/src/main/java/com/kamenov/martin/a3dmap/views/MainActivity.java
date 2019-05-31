@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
         relativeLayout.addView(gamePanel);
     }
 
-    private void createMapObject() {
+    public void createMapObject() {
         float centerX = 25.151561f;
         float centerY = 42.624143f;
         float sizeCoef = EngineConstants.SCREEN_WIDTH / 4;
@@ -180,8 +180,6 @@ public class MainActivity extends Activity {
 
             objects.add(town);
         }
-
-
 
         //objects.add(mapObject);
 
