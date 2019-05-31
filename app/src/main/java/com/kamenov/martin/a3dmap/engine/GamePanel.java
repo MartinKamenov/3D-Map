@@ -125,12 +125,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
             }
         }
 
-        //mainActivity.createMapObject();
-        ArrayList<Object3D> aa = new ArrayList<>();
-        Cube cube = new Cube(0, 0,0, 50, PaintService.createEdgePaint("green"),
-                PaintService.createWallPaint("blue"), 1);
-        aa.add(cube);
-        FigureFactory.getInstance().setFigures(aa);
+        mainActivity.createMapObject(index, -1);
         this.updateFigures();
     }
 

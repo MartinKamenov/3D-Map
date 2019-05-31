@@ -16,6 +16,7 @@ import com.kamenov.martin.a3dmap.R;
 import com.kamenov.martin.a3dmap.engine.GamePanel;
 import com.kamenov.martin.a3dmap.engine.constants.EngineConstants;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.ComplexObject;
+import com.kamenov.martin.a3dmap.engine.models.game_objects.Cube;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.PartsObject;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.Sphere;
 import com.kamenov.martin.a3dmap.engine.models.game_objects.contracts.DeepPoint;
@@ -56,13 +57,13 @@ public class MainActivity extends Activity {
         RelativeLayout relativeLayout = findViewById(R.id.container);
         drawingService = DrawingService.getInstance(SortingService.getInstance());
         drawingService.setEdgePaint(PaintService.createEdgePaint("#00966E"));
-        createMapObject();
+        createMapObject(-1, -1);
         gamePanel = new GamePanel(this, drawingService, FigureFactory.getInstance());
 
         relativeLayout.addView(gamePanel);
     }
 
-    public void createMapObject() {
+    public void createMapObject(int firstCubeIndex, int secondCubeIndex) {
         float centerX = 25.151561f;
         float centerY = 42.624143f;
         float sizeCoef = EngineConstants.SCREEN_WIDTH / 4;
@@ -167,16 +168,28 @@ public class MainActivity extends Activity {
 
             // Radius is calculated adding town's size proportion to two
             float radius = 2 + (towns[i].population / townsSizeCoef);
-
-            Sphere town = new Sphere(
-                    EngineConstants.SCREEN_WIDTH / 2 + x,
-                    EngineConstants.SCREEN_HEIGHT / 2 + y,
-                    0,
-                    PaintService.createWallPaint("aa"),
-                    PaintService.createWallPaint("white"),
-                    1,
-                    radius
-            );
+            Object3D town;
+            if(i == firstCubeIndex || i == secondCubeIndex) {
+                town = new Cube(
+                        EngineConstants.SCREEN_WIDTH / 2 + x,
+                        EngineConstants.SCREEN_HEIGHT / 2 + y,
+                        0,
+                        10,
+                        PaintService.createWallPaint("aa"),
+                        PaintService.createWallPaint("white"),
+                        1
+                );
+            } else {
+                town = new Sphere(
+                        EngineConstants.SCREEN_WIDTH / 2 + x,
+                        EngineConstants.SCREEN_HEIGHT / 2 + y,
+                        0,
+                        PaintService.createWallPaint("aa"),
+                        PaintService.createWallPaint("white"),
+                        1,
+                        radius
+                );
+            }
 
             objects.add(town);
         }
