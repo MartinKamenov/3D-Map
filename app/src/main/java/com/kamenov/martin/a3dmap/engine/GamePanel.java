@@ -108,6 +108,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
         }
         Object3D closestObject = objects.get(0);
         int index = 0;
+        eventX = ((float)eventX - EngineConstants.SCREEN_WIDTH / 2) + mainActivity.centerX;
+        eventY = ((float)eventY - EngineConstants.SCREEN_HEIGHT / 2) + mainActivity.centerY;
         double closestDifference = getDifferenceUsingPythagoras(
                 eventX,
                 closestObject.x,

@@ -41,6 +41,9 @@ public class MainActivity extends Activity {
 
     private GamePanel gamePanel;
     private DrawingService drawingService;
+    public float centerX;
+    public float centerY;
+    public float sizeCoef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +67,9 @@ public class MainActivity extends Activity {
     }
 
     public void createMapObject(int firstCubeIndex, int secondCubeIndex) {
-        float centerX = 25.151561f;
-        float centerY = 42.624143f;
-        float sizeCoef = EngineConstants.SCREEN_WIDTH / 4;
+        centerX = 25.151561f;
+        centerY = 42.624143f;
+        sizeCoef = EngineConstants.SCREEN_WIDTH / 4;
         double[][] pointsReversed = new double[][] {
                 new double[] {44.215051, 22.675117},
                 new double[] {44.067670, 23.042662},
@@ -170,14 +173,14 @@ public class MainActivity extends Activity {
             float radius = 2 + (towns[i].population / townsSizeCoef);
             Object3D town;
             if(i == firstCubeIndex || i == secondCubeIndex) {
-                town = new Cube(
+                town = new Sphere(
                         EngineConstants.SCREEN_WIDTH / 2 + x,
                         EngineConstants.SCREEN_HEIGHT / 2 + y,
                         0,
-                        10,
                         PaintService.createWallPaint("aa"),
-                        PaintService.createWallPaint("white"),
-                        1
+                        PaintService.createWallPaint("red"),
+                        1,
+                        15
                 );
             } else {
                 town = new Sphere(
