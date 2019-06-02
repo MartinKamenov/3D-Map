@@ -89,7 +89,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
         return true;
     }
 
-    private void updateFigures() {
+    public void updateFigures() {
         this.figures = FigureFactory.getInstance().getFigures();
     }
 

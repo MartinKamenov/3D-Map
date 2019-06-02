@@ -49,6 +49,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private View calculateButton;
     private EditText fromCity;
     private EditText toCity;
+    private Town[] towns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +174,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         String townsString = getStringFromInputStream(inputStream);
 
         Gson gson = new Gson();
-        Town[] towns = gson.fromJson(townsString, Town[].class);
+        towns = gson.fromJson(townsString, Town[].class);
 
         ArrayList<Object3D> objects = new ArrayList<>();
         int townsSizeCoef = 118500;
@@ -221,8 +222,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         );
 
         ArrayList<Object3D> allFigures = new ArrayList();
-//        mapObject.rotateZ3D(90);
-//        townsObject.rotateZ3D(90);
         allFigures.add(mapObject);
         allFigures.add(townsObject);
         FigureFactory.getInstance().setFigures(allFigures);
@@ -247,7 +246,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        String fromCityText = fromCity.getText().toString();
-        String toCityText = toCity.getText().toString();
+        String fromCityText = fromCity.getText().toString().toLowerCase();
+        String toCityText = toCity.getText().toString().toLowerCase();
+        int fromIndex = -1;
+        int toIndex = -1;
+        for(int i = 0; i < towns.length; i++) {
+            String townsToLower = towns[i].city.toLowerCase();
+            if(townsToLower.contains(fromCityText)) {
+                fromIndex = i;
+            }
+
+            if(townsToLower.contains(toCityText)) {
+                toIndex = i;
+            }
+        }
+
+        createMapObject(fromIndex, toIndex);
+        gamePanel.updateFigures();
     }
 }
