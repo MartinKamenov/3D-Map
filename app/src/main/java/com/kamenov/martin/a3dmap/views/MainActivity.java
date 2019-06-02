@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
@@ -64,12 +65,15 @@ public class MainActivity extends Activity {
         gamePanel = new GamePanel(this, drawingService, FigureFactory.getInstance());
 
         relativeLayout.addView(gamePanel);
+
+        LinearLayout buttonContainer = findViewById(R.id.selection_container);
+        buttonContainer.bringToFront();
     }
 
     public void createMapObject(int firstCubeIndex, int secondCubeIndex) {
         centerX = 25.151561f;
         centerY = 42.624143f;
-        sizeCoef = EngineConstants.SCREEN_WIDTH / 4;
+        sizeCoef = EngineConstants.SCREEN_WIDTH / 8;
         double[][] pointsReversed = new double[][] {
                 new double[] {44.215051, 22.675117},
                 new double[] {44.067670, 23.042662},
@@ -197,8 +201,6 @@ public class MainActivity extends Activity {
             objects.add(town);
         }
 
-        //objects.add(mapObject);
-
         ComplexObject townsObject = new ComplexObject(
                 EngineConstants.SCREEN_WIDTH / 2,
                 EngineConstants.SCREEN_HEIGHT / 2,
@@ -210,8 +212,8 @@ public class MainActivity extends Activity {
         );
 
         ArrayList<Object3D> allFigures = new ArrayList();
-        mapObject.rotateZ3D(90);
-        townsObject.rotateZ3D(90);
+//        mapObject.rotateZ3D(90);
+//        townsObject.rotateZ3D(90);
         allFigures.add(mapObject);
         allFigures.add(townsObject);
         FigureFactory.getInstance().setFigures(allFigures);

@@ -9,6 +9,25 @@
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></RelativeLayout>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/selection_container"
+            android:layout_alignParentTop="true"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#000000">
+            <EditText
+                android:id="@+id/from_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"/>
+            <EditText
+                android:id="@+id/to_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
