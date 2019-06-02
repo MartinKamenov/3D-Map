@@ -36,9 +36,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
     private float y1;
     private float x2;
     private float y2;
-    private float initialX;
-    private float initialY;
-    private float smallestDifference = 10;
     private MainActivity mainActivity;
 
     public GamePanel(MainActivity mainActivity, DrawingService drawingService, IFigureFactory figureFactory) {
@@ -61,8 +58,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
                 y1 = event.getY();
-                initialX = event.getX();
-                initialY = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 x2 = event.getX();
@@ -84,51 +79,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback, Ga
                 y2 = event.getY();
                 deltaX = x2 - x1;
                 deltaY = y2 - y1;
-                float deltaXInitial = Math.abs(x2 - initialX);
-                float deltaYInitial = Math.abs(y2 - initialY);
-                if(deltaXInitial < smallestDifference && deltaYInitial < smallestDifference) {
-                    addCube(x2, y2, (ComplexObject) figures.get(1));
-                }
-                else {
-                    for (int i = 0; i < figures.size(); i++) {
-                        Object3D figure = figures.get(i);
-                        moveObject(deltaX, deltaY, figure);
-                    }
+                for (int i = 0; i < figures.size(); i++) {
+                    Object3D figure = figures.get(i);
+                    moveObject(deltaX, deltaY, figure);
                 }
                 draw();
                 break;
         }
         return true;
-    }
-
-    private void addCube(float eventX, float eventY, ComplexObject figure) {
-        ArrayList<Object3D> objects = figure.getObjects();
-        if(objects.size() == 0) {
-            return;
-        }
-        Object3D closestObject = objects.get(0);
-        int index = 0;
-        eventX = ((float)eventX - EngineConstants.SCREEN_WIDTH / 2) + mainActivity.centerX;
-        eventY = ((float)eventY - EngineConstants.SCREEN_HEIGHT / 2) + mainActivity.centerY;
-        double closestDifference = getDifferenceUsingPythagoras(
-                eventX,
-                closestObject.x,
-                eventY,
-                closestObject.y);
-
-        for(int i = 1; i < objects.size(); i++) {
-            double currentDifference = getDifferenceUsingPythagoras(
-                    eventX, objects.get(i).x,
-                    eventY, objects.get(i).y);
-            if(currentDifference < closestDifference) {
-                closestDifference = currentDifference;
-                index = i;
-                closestObject = objects.get(i);
-            }
-        }
-
-        mainActivity.createMapObject(index, -1);
-        this.updateFigures();
     }
 
     private void updateFigures() {
