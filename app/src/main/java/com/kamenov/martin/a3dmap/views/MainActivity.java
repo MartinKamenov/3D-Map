@@ -30,6 +30,7 @@ import com.kamenov.martin.a3dmap.engine.services.SortingService;
 import com.kamenov.martin.a3dmap.engine.services.factories.FigureFactory;
 import com.kamenov.martin.a3dmap.models.Background;
 import com.kamenov.martin.a3dmap.models.Town;
+import com.kamenov.martin.a3dmap.models.TownsGraphManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -175,6 +176,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         Gson gson = new Gson();
         towns = gson.fromJson(townsString, Town[].class);
+
+        TownsGraphManager manager = TownsGraphManager.getInstance(towns);
 
         ArrayList<Object3D> objects = new ArrayList<>();
         int townsSizeCoef = 118500;

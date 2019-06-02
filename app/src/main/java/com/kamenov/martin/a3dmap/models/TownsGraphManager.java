@@ -6,10 +6,20 @@ public class TownsGraphManager {
     private final Town[] towns;
     private final ArrayList<TownGraph> allGraphs;
 
-    public TownsGraphManager(Town[] towns) {
+    private static TownsGraphManager instance;
+
+    private TownsGraphManager(Town[] towns) {
         this.towns = towns;
         this.allGraphs = new ArrayList<>();
         setGraphs();
+    }
+
+    public static TownsGraphManager getInstance(Town[] towns) {
+        if(instance == null) {
+            instance = new TownsGraphManager(towns);
+        }
+
+        return instance;
     }
 
     public void createGraph(String firstTownName, String secondTownName) {
@@ -31,6 +41,8 @@ public class TownsGraphManager {
 
             index++;
         }
+
+        allGraphs.add(new TownGraph(towns[firstTownIndex], towns[secondTownIndex]));
     }
 
     public void setGraphs() {
