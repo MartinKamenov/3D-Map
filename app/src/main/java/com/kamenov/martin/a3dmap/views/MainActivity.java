@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -38,13 +39,16 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     private GamePanel gamePanel;
     private DrawingService drawingService;
     public float centerX;
     public float centerY;
     public float sizeCoef;
+    private View calculateButton;
+    private EditText fromCity;
+    private EditText toCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,11 @@ public class MainActivity extends Activity {
 
         LinearLayout buttonContainer = findViewById(R.id.selection_container);
         buttonContainer.bringToFront();
+
+        fromCity = findViewById(R.id.from_city);
+        toCity = findViewById(R.id.to_city);
+        calculateButton = findViewById(R.id.calculate_button);
+        calculateButton.setOnClickListener(this);
     }
 
     public void createMapObject(int firstCubeIndex, int secondCubeIndex) {
@@ -234,5 +243,11 @@ public class MainActivity extends Activity {
         }
 
         return "";
+    }
+
+    @Override
+    public void onClick(View view) {
+        String fromCityText = fromCity.getText().toString();
+        String toCityText = toCity.getText().toString();
     }
 }
