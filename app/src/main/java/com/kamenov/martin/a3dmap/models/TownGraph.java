@@ -16,6 +16,14 @@ public class TownGraph {
         return latDegreeToKm * (float)getDifferenceUsingPythagoras(firstTown.lng, secondTown.lng, firstTown.lat, secondTown.lat);
     }
 
+    public Town getFirstTown() {
+        return firstTown;
+    }
+
+    public Town getSecondTown() {
+        return secondTown;
+    }
+
     private double getDifferenceUsingPythagoras(double x1, double x2, double y1, double y2) {
         return Math.sqrt(
                 (x1 - x2)*(x1 - x2) +

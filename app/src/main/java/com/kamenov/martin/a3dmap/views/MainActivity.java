@@ -30,6 +30,7 @@ import com.kamenov.martin.a3dmap.engine.services.SortingService;
 import com.kamenov.martin.a3dmap.engine.services.factories.FigureFactory;
 import com.kamenov.martin.a3dmap.models.Background;
 import com.kamenov.martin.a3dmap.models.Town;
+import com.kamenov.martin.a3dmap.models.TownsDistanceInformation;
 import com.kamenov.martin.a3dmap.models.TownsGraphManager;
 
 import java.io.BufferedReader;
@@ -178,6 +179,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         towns = gson.fromJson(townsString, Town[].class);
 
         TownsGraphManager manager = TownsGraphManager.getInstance(towns);
+
+        if(firstCubeIndex >= 0 && secondCubeIndex >= 0) {
+            ArrayList<Town> townsRoute = new ArrayList<Town>();
+            townsRoute.add(towns[firstCubeIndex]);
+            TownsDistanceInformation townsDistanceInformation = manager
+                    .findClosesRouth(towns[firstCubeIndex], towns[secondCubeIndex], 0, townsRoute);
+        }
 
         ArrayList<Object3D> objects = new ArrayList<>();
         int townsSizeCoef = 118500;
