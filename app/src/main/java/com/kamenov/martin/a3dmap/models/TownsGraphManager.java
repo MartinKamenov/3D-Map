@@ -70,21 +70,14 @@ public class TownsGraphManager {
 
         townsRoute.add(fromTown);
 
-        ArrayList<TownGraph> nextAvailableTowns = new ArrayList<>();
-
         for(int i = 0; i < allGraphs.size(); i++) {
             Town graphFirstTown = allGraphs.get(i).getFirstTown();
             Town graphSecondTown = allGraphs.get(i).getSecondTown();
 
             if(graphFirstTown.city.equals(fromTown.city) && isTownAvailable(townsRoute, graphSecondTown)) {
-                nextAvailableTowns.add(allGraphs.get(i));
+                findClosestRouthe(allGraphs.get(i).getSecondTown(), toTown,
+                        distance + allGraphs.get(i).getDistance(), townsRoute);
             }
-        }
-
-        for(int i = 0; i < nextAvailableTowns.size(); i++) {
-            TownGraph graph = nextAvailableTowns.get(i);
-            findClosestRouthe(graph.getSecondTown(), toTown,
-                    distance + graph.getDistance(), townsRoute);
         }
     }
 
