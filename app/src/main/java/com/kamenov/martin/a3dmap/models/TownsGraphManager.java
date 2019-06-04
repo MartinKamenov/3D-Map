@@ -3,6 +3,8 @@ package com.kamenov.martin.a3dmap.models;
 import java.util.ArrayList;
 
 public class TownsGraphManager {
+    public ArrayList<Town> minRoute;
+    public float minimalDistance;
     private final Town[] towns;
     private final ArrayList<TownGraph> allGraphs;
 
@@ -47,38 +49,37 @@ public class TownsGraphManager {
 
     public void setGraphs() {
         createGraph("Vidin", "Montana");
+        createGraph("Montana", "Vidin");
         createGraph("Montana", "Vratsa");
+        createGraph("Vratsa", "Montana");
         createGraph("Vratsa", "Sofia");
+        createGraph("Sofia", "Vratsa");
     }
 
-    public TownsDistanceInformation findClosesRouth(Town firstTown,
-                                                    Town secondTown,
+    public void findClosestRoute(Town fromTown,
+                                                    Town toTown,
                                                     float distance,
                                                     ArrayList<Town> townsRoute) {
-        if(firstTown.city.equals(secondTown.city)) {
-            return new TownsDistanceInformation(distance, townsRoute.toArray(new Town[townsRoute.size()]));
+        if(fromTown.city.equals(toTown.city)) {
+            townsRoute.add(toTown);
+            if(distance < minimalDistance) {
+                minimalDistance = distance;
+                minRoute = townsRoute;
+            }
+            return;
         }
 
-        townsRoute.add(secondTown);
-
-        ArrayList<Town> nextAvailableTowns = new ArrayList<>();
+        townsRoute.add(fromTown);
 
         for(int i = 0; i < allGraphs.size(); i++) {
             Town graphFirstTown = allGraphs.get(i).getFirstTown();
             Town graphSecondTown = allGraphs.get(i).getSecondTown();
 
-            if(graphFirstTown.city.equals(firstTown.city) && isTownAvailable(townsRoute, graphSecondTown)) {
-                nextAvailableTowns.add(graphSecondTown);
-            } else if(graphSecondTown.city.equals(firstTown.city) && isTownAvailable(townsRoute, graphFirstTown)) {
-                nextAvailableTowns.add(graphFirstTown);
+            if(graphFirstTown.city.equals(fromTown.city) && isTownAvailable(townsRoute, graphSecondTown)) {
+                findClosestRoute(allGraphs.get(i).getSecondTown(), toTown,
+                        distance + allGraphs.get(i).getDistance(), townsRoute);
             }
         }
-
-        for(int i = 0; i < nextAvailableTowns.size(); i++) {
-            findClosesRouth(secondTown, nextAvailableTowns.get(i), distance, townsRoute);
-        }
-
-        return new TownsDistanceInformation(distance, new Town[townsRoute.size()]);
     }
 
     private boolean isTownAvailable(ArrayList<Town> townsRoute, Town town) {
