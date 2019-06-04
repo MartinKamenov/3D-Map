@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.kamenov.martin.a3dmap.R;
@@ -52,6 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private EditText fromCity;
     private EditText toCity;
     private Town[] towns;
+    private TextView routheText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         fromCity = findViewById(R.id.from_city);
         toCity = findViewById(R.id.to_city);
+        routheText = findViewById(R.id.route);
         calculateButton = findViewById(R.id.calculate_button);
         calculateButton.setOnClickListener(this);
     }
@@ -182,11 +185,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         if(firstCubeIndex >= 0 && secondCubeIndex >= 0) {
             manager.minimalDistance = 20000;
-            manager.minRouthe = new ArrayList<>();
+            manager.minRoute = new ArrayList<>();
             manager
-                    .findClosestRouthe(towns[firstCubeIndex], towns[secondCubeIndex], 0, new ArrayList<Town>());
+                    .findClosestRoute(towns[firstCubeIndex], towns[secondCubeIndex], 0, new ArrayList<Town>());
             float distance = manager.minimalDistance;
-            ArrayList<Town> minRouthe = manager.minRouthe;
+            ArrayList<Town> minRouthe = manager.minRoute;
+            addRoutheAndDistanceToMapSelection(distance, minRouthe);
         }
 
         ArrayList<Object3D> objects = new ArrayList<>();
@@ -238,6 +242,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
         allFigures.add(mapObject);
         allFigures.add(townsObject);
         FigureFactory.getInstance().setFigures(allFigures);
+    }
+
+    private void addRoutheAndDistanceToMapSelection(float distance, ArrayList<Town> minRouthe) {
+        StringBuilder route = new StringBuilder();
+        route.append("Route: \n");
+        for(int i = 0; i < minRouthe.size(); i++) {
+            route.append(minRouthe.get(i).city + " ");
+        }
+
+        route.append("\nMinimal distance:\n" + (int)distance + " km");
+
+        routheText.setText(route.toString());
     }
 
     private static String getStringFromInputStream(InputStream stream) {

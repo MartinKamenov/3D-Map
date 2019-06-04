@@ -3,7 +3,7 @@ package com.kamenov.martin.a3dmap.models;
 import java.util.ArrayList;
 
 public class TownsGraphManager {
-    public ArrayList<Town> minRouthe;
+    public ArrayList<Town> minRoute;
     public float minimalDistance;
     private final Town[] towns;
     private final ArrayList<TownGraph> allGraphs;
@@ -56,14 +56,15 @@ public class TownsGraphManager {
         createGraph("Sofia", "Vratsa");
     }
 
-    public void findClosestRouthe(Town fromTown,
+    public void findClosestRoute(Town fromTown,
                                                     Town toTown,
                                                     float distance,
                                                     ArrayList<Town> townsRoute) {
         if(fromTown.city.equals(toTown.city)) {
+            townsRoute.add(toTown);
             if(distance < minimalDistance) {
                 minimalDistance = distance;
-                minRouthe = townsRoute;
+                minRoute = townsRoute;
             }
             return;
         }
@@ -75,7 +76,7 @@ public class TownsGraphManager {
             Town graphSecondTown = allGraphs.get(i).getSecondTown();
 
             if(graphFirstTown.city.equals(fromTown.city) && isTownAvailable(townsRoute, graphSecondTown)) {
-                findClosestRouthe(allGraphs.get(i).getSecondTown(), toTown,
+                findClosestRoute(allGraphs.get(i).getSecondTown(), toTown,
                         distance + allGraphs.get(i).getDistance(), townsRoute);
             }
         }
