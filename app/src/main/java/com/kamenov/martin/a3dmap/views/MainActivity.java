@@ -181,10 +181,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         TownsGraphManager manager = TownsGraphManager.getInstance(towns);
 
         if(firstCubeIndex >= 0 && secondCubeIndex >= 0) {
-            ArrayList<Town> townsRoute = new ArrayList<Town>();
-            townsRoute.add(towns[firstCubeIndex]);
-            TownsDistanceInformation townsDistanceInformation = manager
-                    .findClosesRouth(towns[firstCubeIndex], towns[secondCubeIndex], 0, townsRoute);
+            manager.minimalDistance = 20000;
+            manager.minRouthe = new ArrayList<>();
+            manager
+                    .findClosestRouthe(towns[firstCubeIndex], towns[secondCubeIndex], 0, new ArrayList<Town>());
+            float distance = manager.minimalDistance;
+            ArrayList<Town> minRouthe = manager.minRouthe;
         }
 
         ArrayList<Object3D> objects = new ArrayList<>();
