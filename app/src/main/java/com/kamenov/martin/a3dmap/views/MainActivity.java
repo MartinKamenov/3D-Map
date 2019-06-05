@@ -181,6 +181,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Gson gson = new Gson();
         towns = gson.fromJson(townsString, Town[].class);
 
+        ArrayList<Object3D> allFigures = new ArrayList();
+        allFigures.add(mapObject);
+
         TownsGraphManager manager = TownsGraphManager.getInstance(towns);
 
         if(firstCubeIndex >= 0 && secondCubeIndex >= 0) {
@@ -189,8 +192,46 @@ public class MainActivity extends Activity implements View.OnClickListener {
             manager
                     .findClosestRoute(towns[firstCubeIndex], towns[secondCubeIndex], 0, new ArrayList<Town>());
             float distance = manager.minimalDistance;
-            ArrayList<Town> minRouthe = manager.minRoute;
-            addRoutheAndDistanceToMapSelection(distance, minRouthe);
+            ArrayList<Town> minRoute = manager.minRoute;
+            addRoutheAndDistanceToMapSelection(distance, minRoute);
+
+            ArrayList<Object3D> routesBetweenTowns = new ArrayList<>();
+            for(int i = 0; i < minRoute.size() - 1; i++) {
+                Town firstTown = minRoute.get(i);
+                Town secondTown = minRoute.get(i + 1);
+                DeepPoint[] routePoints = new DeepPoint[4];
+                routePoints[0] = new DeepPoint((float) firstTown.lng + 0.5f, (float) firstTown.lat, 0);
+                routePoints[1] = new DeepPoint((float) firstTown.lng, (float) firstTown.lat, 0);
+                routePoints[2] = new DeepPoint((float) secondTown.lng, (float) secondTown.lat, 0);
+                routePoints[3] = new DeepPoint((float) secondTown.lng + 0.5f, (float) secondTown.lat, 0);
+
+                ArrayList<DeepPoint[]> routeParts = new ArrayList<>();
+                routeParts.add(routePoints);
+                PartsObject partsObject = new PartsObject(
+                        EngineConstants.SCREEN_WIDTH / 2,
+                        EngineConstants.SCREEN_HEIGHT / 2,
+                        0,
+                        PaintService.createEdgePaint("white"),
+                        PaintService.createWallPaint("white"),
+                        1,
+                        routePoints,
+                        routeParts
+                );
+
+                routesBetweenTowns.add(partsObject);
+            }
+
+            ComplexObject routesObject = new ComplexObject(
+                    EngineConstants.SCREEN_WIDTH / 2,
+                    EngineConstants.SCREEN_HEIGHT / 2,
+                    0,
+                    PaintService.createEdgePaint("white"),
+                    PaintService.createWallPaint("white"),
+                    1,
+                    routesBetweenTowns
+            );
+
+            allFigures.add(routesObject);
         }
 
         ArrayList<Object3D> objects = new ArrayList<>();
@@ -237,9 +278,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 1,
                 objects
         );
-
-        ArrayList<Object3D> allFigures = new ArrayList();
-        allFigures.add(mapObject);
         allFigures.add(townsObject);
         FigureFactory.getInstance().setFigures(allFigures);
     }
